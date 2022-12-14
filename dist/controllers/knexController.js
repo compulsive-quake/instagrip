@@ -35,42 +35,37 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAll = exports.getOne = exports.put = exports.init = exports.red = void 0;
-const ioredis_1 = __importDefault(require("ioredis"));
+exports.seed = exports.migrate = exports.db = void 0;
+const knex_1 = __importDefault(require("knex"));
 const config_json_1 = require("../config.json");
 const log = __importStar(require("./logController"));
-exports.red = new ioredis_1.default(config_json_1.redis);
-function init() {
+exports.db = (0, knex_1.default)(config_json_1.SQL);
+/**
+ * apply the latest migration files to db
+ */
+function migrate() {
     return __awaiter(this, void 0, void 0, function* () {
-        exports.red.on('error', log.error);
-    });
-}
-exports.init = init;
-function put(name, id, data) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const path = `${name}:${id}`;
-        let stringData;
         try {
-            stringData = JSON.stringify(data);
+            return yield exports.db.migrate.latest();
         }
-        catch (e) {
-            throw new Error('failed to stringify data object');
+        catch (err) {
+            log.error('failed migration', err);
         }
-        yield exports.red.call("JSON.SET", path, "$", stringData);
     });
 }
-exports.put = put;
-function getOne(name, id) {
+exports.migrate = migrate;
+/**
+ * apply the latest migration files to db
+ */
+function seed() {
     return __awaiter(this, void 0, void 0, function* () {
-        const path = `${name}:${id}`;
-        return exports.red.call("JSON.GET", path, "$");
+        try {
+            const seedResults = yield exports.db.seed.run();
+        }
+        catch (err) {
+            log.error('failed seed', err);
+        }
     });
 }
-exports.getOne = getOne;
-function getAll(path) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return exports.red.call("JSON.GET", path);
-    });
-}
-exports.getAll = getAll;
-//# sourceMappingURL=redisController.js.map
+exports.seed = seed;
+//# sourceMappingURL=knexController.js.map

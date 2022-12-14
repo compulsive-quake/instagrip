@@ -12,5 +12,5 @@
 All external API requests are scheduled in a queue to avoid being rate limited
 
 Requirements:
-- Redis
-- MYSQL
+- Redis connection
+- MYSQL (or SQLITE)

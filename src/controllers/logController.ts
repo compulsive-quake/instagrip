@@ -1,5 +1,5 @@
 
-export function error(msg: string, err: Error) {
+export function error(msg: string, err: any) {
   console.error(msg);
   console.error(err);
 }

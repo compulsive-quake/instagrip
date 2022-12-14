@@ -1,5 +1,5 @@
 ## Instagrip
-### Automated Instagram
+### Automated Instagram 
 
 - request followers
 - download pictures / videos / reels / stories
@@ -11,6 +11,7 @@
 
 All external API requests are scheduled in a queue to avoid being rate limited
 
-Requirements:
+### Requirements:
 - Redis connection
 - MYSQL (or SQLITE)
+

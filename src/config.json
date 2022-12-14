@@ -3,13 +3,15 @@
     "host": "127.0.0.1",
     "port": 6379,
     "username": "",
-    "password": "",
-    "prefix": ""
+    "password": ""
   },
   "SQL": {
     "client": "sqlite3",
     "connection": {
       "filename": "./db.sqlite"
     }
+  },
+  "socket": {
+    "port": 8080
   }
 }
